@@ -1,0 +1,151 @@
+<USER_REQUEST>
+SATYA — BUILD VIDEO + TEXT PIPELINES IN ONE CONTROLLED IMPLEMENTATION PASS
+
+We are temporarily pausing further full-scale Audio training.
+
+Your task is to implement the Video and Text modules for SATYA.
+
+IMPORTANT:
+This is an ENGINEERING + INTEGRATION phase, NOT scientific validation.
+
+Do NOT:
+- modify src/image/
+- modify the working EfficientNet-B0 image model
+- modify the image production threshold (0.50)
+- touch the ASVspoof EVAL data
+- claim Video or Text detection accuracy without real held-out evaluation
+- fabricate predictions
+- fabricate benchmark metrics
+- add random_split leakage
+- silently download datasets
+- automatically install packages
+- replace working components unnecessarily
+- create a fake "overall authenticity score"
+
+==================================================
+PART 1 — VIDEO
+==================================================
+
+Build a modular Video Forensics pipeline.
+
+Goal:
+
+video
+→ validate input
+→ extract sampled frames
+→ run the EXISTING SATYA image forensic model on frames
+→ collect frame-level probabilities
+→ aggregate evidence
+→ produce a transparent video forensic report.
+
+Do NOT train a dedicated video neural network yet.
+
+Reuse the existing verified EfficientNet-B0 image inference pipeline wherever appropriate.
+
+Implement:
+
+src/video/
+    __init__.py
+    preprocess.py
+    frame_extractor.py
+    inference.py
+    evaluate.py
+    README_VIDEO.md
+
+Video pipeline requirements:
+
+1. Accept common video formats only when actually supported by the installed decoder.
+2. Validate the file before processing.
+3. Sample frames at a controlled interval rather than processing every frame.
+4. Make sampling configurable.
+5. Never load an entire long video into RAM unnecessarily.
+6. Run the existing image model on sampled frames.
+7. Record:
+   - number of frames sampled
+   - frame timestamps
+   - per-frame fake probability
+   - mean fake probability
+   - median fake probability
+   - maximum fake pro
+<truncated 2862 bytes>
+=================================
+
+Create tests for:
+
+VIDEO:
+- valid input
+- corrupt input
+- frame extraction
+- sampling
+- empty/no-frame condition
+- image-model integration
+- probability aggregation
+- NaN/Inf
+- API response
+
+TEXT:
+- empty input
+- short input
+- multiple claims
+- claim extraction
+- no evidence provider
+- evidence status handling
+- API response
+- no fabricated evidence
+
+Run all existing tests.
+
+Run:
+
+tests\test_audio.py
+
+to ensure Audio remains unaffected.
+
+Run image inference/API smoke tests to ensure Image remains unaffected.
+
+==================================================
+PART 6 — FINAL AUDIT
+==================================================
+
+Before reporting completion, inspect the implementation for:
+
+- hardcoded predictions
+- fabricated probabilities
+- fabricated sources
+- random train/test splitting
+- data leakage
+- automatic downloads
+- automatic package installation
+- silent failures
+- unsupported file formats
+- misleading scientific terminology
+- accidental modification of Image
+- accidental use of ASVspoof EVAL
+- broken existing API endpoints
+
+Report:
+
+1. Files created
+2. Files modified
+3. Files intentionally untouched
+4. Tests executed
+5. Test results
+6. Video pipeline status
+7. Text pipeline status
+8. Known limitations
+9. Anything requiring real datasets or external evidence services
+10. Exact next recommended step
+
+Do not call the Video or Text modules production-ready or scientifically validated unless actual validation has been performed.
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-09-12T14:15:31+05:30.
+
+The user's current state is as follows:
+Other open documents:
+- d:\fakeshield\frontend\js\app.js (LANGUAGE_JAVASCRIPT)
+- d:\fakeshield\frontend\js\analyzer.js (LANGUAGE_JAVASCRIPT)
+- d:\fakeshield\README_AI_GENERATED.md (LANGUAGE_MARKDOWN)
+- d:\fakeshield\tools\inspect_ai_dataset.py (LANGUAGE_PYTHON)
+- d:\fakeshield\src\ai_generated\dataset.py (LANGUAGE_PYTHON)
+</ADDITIONAL_METADATA>

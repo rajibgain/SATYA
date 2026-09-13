@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Environment variables & secrets
+.env
+.env.*
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+logs/
+*.log
+
+# Temporary and generated files
+tmp/
+temp/
+outputs/
+*.tmp
+*.bak
+
+# Data and large files
+data/raw/
+data/processed/
+*.zip
+*.tar.gz
+
+# Note: Important model checkpoints (*.pth, *.pt, *.ckpt) are handled by Git LFS, so they are NOT ignored here,
+# unless they are in a specifically excluded temporary directory.
+
+# OS specific files
+.DS_Store
+Thumbs.db

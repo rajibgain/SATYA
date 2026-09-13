@@ -1,0 +1,120 @@
+/* ==========================================================
+   ANIMATIONS & KEYFRAMES
+   ========================================================== */
+
+/* ── Scanline ── */
+@keyframes scanline {
+  0%   { top: 0%; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* ── Pulse ── */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.3; }
+}
+
+/* ── Fade in up ── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Fade in ── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Ring fill ── */
+@keyframes ringFill {
+  from { stroke-dashoffset: var(--ring-circumference); }
+  to   { stroke-dashoffset: var(--ring-target); }
+}
+
+/* ── Counter ── */
+@keyframes countUp {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Scroll reveal classes ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity var(--duration-xslow) var(--ease-out),
+    transform var(--duration-xslow) var(--ease-out);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children */
+.stagger > .reveal:nth-child(1) { transition-delay: 0ms; }
+.stagger > .reveal:nth-child(2) { transition-delay: 80ms; }
+.stagger > .reveal:nth-child(3) { transition-delay: 160ms; }
+.stagger > .reveal:nth-child(4) { transition-delay: 240ms; }
+.stagger > .reveal:nth-child(5) { transition-delay: 320ms; }
+.stagger > .reveal:nth-child(6) { transition-delay: 400ms; }
+.stagger > .reveal:nth-child(7) { transition-delay: 480ms; }
+.stagger > .reveal:nth-child(8) { transition-delay: 560ms; }
+
+/* ── Hero entrance ── */
+.hero-enter {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.hero-enter.animate {
+  animation: fadeInUp 0.9s var(--ease-out) forwards;
+}
+
+.hero-enter:nth-child(1) { animation-delay: 0.1s; }
+.hero-enter:nth-child(2) { animation-delay: 0.25s; }
+.hero-enter:nth-child(3) { animation-delay: 0.4s; }
+.hero-enter:nth-child(4) { animation-delay: 0.55s; }
+.hero-enter:nth-child(5) { animation-delay: 0.7s; }
+
+/* ── Section transition ── */
+.section-transition {
+  animation: fadeIn var(--duration-slow) var(--ease-out);
+}
+
+/* ── Scanning pulse ── */
+@keyframes scanPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(0, 207, 160, 0.15); }
+  70%  { box-shadow: 0 0 0 12px rgba(0, 207, 160, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 207, 160, 0); }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .hero-enter {
+    opacity: 1;
+    transform: none;
+  }
+}

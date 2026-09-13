@@ -1,0 +1,14 @@
+flask
+flask-cors
+pillow
+torch
+torchvision
+torchaudio
+scikit-learn
+matplotlib
+numpy
+pandas
+streamlit
+pytest
+soundfile
+opencv-python

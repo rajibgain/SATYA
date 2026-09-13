@@ -1,0 +1,1 @@
+import json; from src.image.integrity import analyze_image_integrity; f = open('data/processed/image_ntire/test/real/0016ed96770dc80ff1b5.jpg', 'rb'); print(json.dumps(analyze_image_integrity(f.read()), indent=2))

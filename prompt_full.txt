@@ -1,0 +1,877 @@
+<USER_REQUEST>
+SATYA — BUILD VIDEO + TEXT PIPELINES IN ONE CONTROLLED IMPLEMENTATION PASS
+
+We are temporarily pausing further full-scale Audio training.
+
+Your task is to implement the Video and Text modules for SATYA.
+
+IMPORTANT:
+This is an ENGINEERING + INTEGRATION phase, NOT scientific validation.
+
+Do NOT:
+- modify src/image/
+- modify the working EfficientNet-B0 image model
+- modify the image production threshold (0.50)
+- touch the ASVspoof EVAL data
+- claim Video or Text detection accuracy without real held-out evaluation
+- fabricate predictions
+- fabricate benchmark metrics
+- add random_split leakage
+- silently download datasets
+- automatically install packages
+- replace working components unnecessarily
+- create a fake "overall authenticity score"
+
+==================================================
+PART 1 — VIDEO
+==================================================
+
+Build a modular Video Forensics pipeline.
+
+Goal:
+
+video
+→ validate input
+→ extract sampled frames
+→ run the EXISTING SATYA image forensic model on frames
+→ collect frame-level probabilities
+→ aggregate evidence
+→ produce a transparent video forensic report.
+
+Do NOT train a dedicated video neural network yet.
+
+Reuse the existing verified EfficientNet-B0 image inference pipeline wherever appropriate.
+
+Implement:
+
+src/video/
+    __init__.py
+    preprocess.py
+    frame_extractor.py
+    inference.py
+    evaluate.py
+    README_VIDEO.md
+
+Video pipeline requirements:
+
+1. Accept common video formats only when actually supported by the installed decoder.
+2. Validate the file before processing.
+3. Sample frames at a controlled interval rather than processing every frame.
+4. Make sampling configurable.
+5. Never load an entire long video into RAM unnecessarily.
+6. Run the existing image model on sampled frames.
+7. Record:
+   - number of frames sampled
+   - frame timestamps
+   - per-frame fake probability
+   - mean fake probability
+   - median fake probability
+   - maximum fake probability
+   - fraction of sampled frames above threshold
+8. Clearly distinguish:
+   - frame-level model assessment
+   - aggregated video-level heuristic
+9. Do NOT call the aggregated value a scientifically validated "video deepfake probability".
+10. If evidence is insufficient, return an appropriate status rather than forcing FAKE/REAL.
+11. Handle corrupt videos and unreadable frames safely.
+12. Do not modify the existing image checkpoint.
+
+Add a CLI smoke test using a tiny synthetic/test video if practical.
+
+==================================================
+PART 2 — TEXT
+==================================================
+
+Build a Text Verification pipeline focused on CLAIM VERIFICATION rather than pretending to have a trained fake-text classifier.
+
+Implement:
+
+src/text/
+    __init__.py
+    preprocess.py
+    claims.py
+    evidence.py
+    inference.py
+    README_TEXT.md
+
+Pipeline:
+
+input text
+→ normalize/extract candidate claims
+→ classify claim type
+→ prepare evidence-search queries
+→ retrieve evidence when an approved web/search layer is available
+→ compare evidence against the claim
+→ produce an evidence-based assessment.
+
+Possible statuses:
+
+SUPPORTED
+CONTESTED
+MISLEADING
+INSUFFICIENT EVIDENCE
+
+Do NOT return TRUE/FALSE unless the evidence layer explicitly supports such a conclusion.
+
+Every factual assessment must preserve its evidence/source references.
+
+If no web/evidence provider is connected, the system must clearly return:
+
+"INSUFFICIENT EVIDENCE"
+
+rather than hallucinating an answer.
+
+Do not pretend an LLM-generated explanation is evidence.
+
+==================================================
+PART 3 — UNIFIED API
+==================================================
+
+Extend the SATYA backend carefully.
+
+Existing image API must continue working unchanged.
+
+Add separate endpoints where appropriate, for example:
+
+POST /api/analyze/video
+POST /api/analyze/text
+
+Do not break:
+
+GET /api/health
+POST /api/analyze
+
+Keep backward compatibility.
+
+==================================================
+PART 4 — FRONTEND
+==================================================
+
+Integrate the new modalities into the existing SATYA UI.
+
+Current status:
+
+Image — WORKING
+Audio — current development
+Video — COMING SOON / PIPELINE READY
+Text — COMING SOON / PIPELINE READY
+
+Do not falsely label Video/Text as scientifically validated.
+
+Create appropriate input experiences:
+
+VIDEO:
+upload video → scan → frame analysis → forensic evidence report
+
+TEXT:
+paste text → extract claims → evidence assessment
+
+Keep the existing SATYA visual identity:
+
+SATYA
+"See Beyond the Surface."
+
+Do not redesign the whole website.
+
+==================================================
+PART 5 — TESTING
+==================================================
+
+Create tests for:
+
+VIDEO:
+- valid input
+- corrupt input
+- frame extraction
+- sampling
+- empty/no-frame condition
+- image-model integration
+- probability aggregation
+- NaN/Inf
+- API response
+
+TEXT:
+- empty input
+- short input
+- multiple claims
+- claim extraction
+- no evidence provider
+- evidence status handling
+- API response
+- no fabricated evidence
+
+Run all existing tests.
+
+Run:
+
+tests\test_audio.py
+
+to ensure Audio remains unaffected.
+
+Run image inference/API smoke tests to ensure Image remains unaffected.
+
+==================================================
+PART 6 — FINAL AUDIT
+==================================================
+
+Before reporting completion, inspect the implementation for:
+
+- hardcoded predictions
+- fabricated probabilities
+- fabricated sources
+- random train/test splitting
+- data leakage
+- automatic downloads
+- automatic package installation
+- silent failures
+- unsupported file formats
+- misleading scientific terminology
+- accidental modification of Image
+- accidental use of ASVspoof EVAL
+- broken existing API endpoints
+
+Report:
+
+1. Files created
+2. Files modified
+3. Files intentionally untouched
+4. Tests executed
+5. Test results
+6. Video pipeline status
+7. Text pipeline status
+8. Known limitations
+9. Anything requiring real datasets or external evidence services
+10. Exact next recommended step
+
+Do not call the Video or Text modules production-ready or scientifically validated unless actual validation has been performed.
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-09-12T14:15:31+05:30.
+
+The user's current state is as follows:
+Other open documents:
+- d:\fakeshield\frontend\js\app.js (LANGUAGE_JAVASCRIPT)
+- d:\fakeshield\frontend\js\analyzer.js (LANGUAGE_JAVASCRIPT)
+- d:\fakeshield\README_AI_GENERATED.md (LANGUAGE_MARKDOWN)
+- d:\fakeshield\tools\inspect_ai_dataset.py (LANGUAGE_PYTHON)
+- d:\fakeshield\src\ai_generated\dataset.py (LANGUAGE_PYTHON)
+</ADDITIONAL_METADATA>{{ CHECKPOINT 7 }}
+ **The earlier parts of this conversation have been truncated due to its long length. The following content summarizes the truncated context so that you may continue your work. **
+
+
+# User Requests
+The following were user requests from the truncated conversation in chronological order:
+1. 1. Create the script
+
+In Antigravity/Cursor, create:
+
+D:\fakeshield\tools\prepare_asvspoof_manifest.py
+
+Paste this entire code:
+
+from pathlib import Path
+import csv
+import hashlib
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+PROTOCOL_ROOT = (
+    PROJECT_ROOT
+    / "data"
+    / "raw"
+    / "asvspoof2019"
+    / "cm_protocols"
+    / "LA"
+    / "ASVspoof2019_LA_cm_protocols"
+)
+
+AUDIO_ROOT = (
+    PROJECT_ROOT
+    / "data"
+    / "raw"
+    / "asvspoof2019"
+    / "audio"
+    / "LA"
+)
+
+OUTPUT_ROOT = (
+    PROJECT_ROOT
+    / "data"
+    / "processed"
+    / "audio_asvspoof2019"
+)
+
+SPLITS = {
+    "train": {
+        "protocol": "ASVspoof2019.LA.cm.train.trn.txt",
+        "audio_dir": "ASVspoof2019_LA_train",
+    },
+    "dev": {
+        "protocol": "ASVspoof2019.LA.cm.dev.trl.txt",
+        "audio_dir": "ASVspoof2019_LA_dev",
+    },
+    "eval": {
+        "protocol": "ASVspoof2019.LA.cm.eval.trl.txt",
+        "audio_dir": "ASVspoof2019_LA_eval",
+    },
+}
+
+
+def sha256_file(path: Path) -> str:
+    """Calculate S
+<truncated 6952 bytes>
+2. NEXT: Dataset integrity audit
+
+Before training AudioResNet, we need to verify that the actual FLAC files are readable and understand their sample rates, channels, durations, and corrupt-file rate.
+
+This matters because your pipeline converts everything to 16 kHz mono, 5-second Mel spectrograms. We should know what we're feeding it before training.
+
+Create:
+
+D:\fakeshield\tools\audit_asvspoof_audio.py
+
+Paste:
+
+from pathlib import Path
+import csv
+from collections import Counter
+import soundfile as sf
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+MANIFEST_ROOT = (
+    PROJECT_ROOT
+    / "data"
+    / "processed"
+    / "audio_asvspoof2019"
+)
+
+SPLITS = ["train", "dev", "eval"]
+
+
+def audit_split(split):
+    manifest_path = MANIFEST_ROOT / f"manifest_{split}.csv"
+
+    print(f"\n{'=' * 70}")
+    print(f"{split.upper()} AUDIO INTEGRITY AUDIT")
+    print(f"{'=' * 70}")
+
+    sample_rates = Counter()
+    channels = Counter()
+
+    durations = []
+
+    readable = 0
+    unreadable = 0
+
+    unreadable_examples = [
+<truncated 2811 bytes>
+3. You are the LEAD ENGINEER + ML ENGINEER + DATA FORENSICS ENGINEER + QA ENGINEER for my project.
+
+PROJECT NAME:
+SATYA
+
+TAGLINE:
+“See Beyond the Surface.”
+
+POSITIONING:
+SATYA is an AI-powered multimodal digital forensics platform.
+Current implemented modality:
+1. Image Forensics — WORKING
+
+Planned/future modalities:
+2. Audio Forensics — IN DEVELOPMENT
+3. Video Forensics — COMING SOON
+4. Text Forensics — COMING SOON
+
+IMPORTANT:
+Do NOT falsely claim that future modalities are implemented.
+Do NOT call an unvalidated ML model “production-ready”.
+Do NOT fabricate accuracy, confidence, forensic evidence, dataset labels, or benchmark results.
+Do NOT silently change scientific terminology to make results look better.
+
+==================================================
+1. USER / DEVELOPMENT ENVIRONMENT
+==================================================
+
+OS:
+Windows 11
+
+Main development laptop:
+ASUS VivoBook X1605ZA
+Intel Core i5-12500H
+16 GB DDR4 RAM
+Intel Iris Xe in
+<truncated 24659 bytes>
+4. STOP and DO NOT start any new audit or training.
+
+You previously reported:
+
+“tools/audit_asvspoof_audio.py is STILL RUNNING in the background
+Task ID: task-279”
+
+However, I cannot see task-279 in my current task/process list.
+
+VERIFY THIS CLAIM using the actual current environment.
+
+Do the following:
+
+1. Check whether tools/audit_asvspoof_audio.py is ACTUALLY running right now.
+2. Check the actual Windows process/task state.
+3. Check whether a Python process is currently executing that script.
+4. Check whether task-279 exists in the current Antigravity task/session environment.
+5. DO NOT rely on your previous message or assume task-279 exists.
+6. DO NOT start another copy of the audit yet.
+7. DO NOT start training.
+8. DO NOT modify any project files.
+
+Use the actual environment/process information to determine the truth.
+
+Report exactly:
+
+AUDIT PROCESS:
+RUNNING / NOT RUNNING / UNKNOWN
+
+PROCESS DETAILS:
+PID:
+COMMAND:
+START TIME if available:
+
+TASK-279:
+EXISTS / DOES NO
+<truncated 262 bytes>
+5. We discovered TWO simultaneous instances of
+tools/audit_asvspoof_audio.py:
+
+PID 8416
+PID 8680
+with PowerShell PID 10288 launching the second instance.
+
+Do NOT start anything new.
+
+Determine which Python PID belongs to the original task-279 execution.
+
+Then terminate ONLY the duplicate execution and its associated PowerShell wrapper.
+
+KEEP the original task-279 audit running.
+
+After termination, verify that exactly ONE audit_asvspoof_audio.py process remains.
+
+Do not modify the script, dataset, manifests, or any project files.
+Do not start training.
+Report:
+- original PID retained
+- duplicate PID terminated
+- wrapper PID terminated
+- remaining audit process
+6. We have completed the full ASVspoof 2019 LA audio integrity audit.
+
+AUDIT RESULTS:
+- 121,461 protocol-labelled FLAC files inspected
+- 0 corrupt/unreadable
+- 100% native 16,000 Hz
+- 100% native mono
+- 107,556 files under 5 seconds (~88.5%)
+- 13,904 files over 5 seconds (~11.5%)
+- maximum duration: 13.188 seconds
+
+Official manifests:
+TRAIN: 25,380
+DEV: 24,844
+EVAL: 71,237
+
+Do NOT modify the raw dataset.
+Do NOT modify the official manifests.
+Do NOT start full training.
+Do NOT use the EVAL split for training, threshold tuning, or model selection.
+
+TASK:
+Create a SMALL REAL-DATA SMOKE TEST for the existing AudioResNet pipeline.
+
+OBJECTIVE:
+Verify that the current real ASVspoof data can successfully pass through:
+
+FLAC
+→ soundfile loading
+→ current audio preprocessing
+→ 16 kHz mono waveform
+→ 5-second pad/truncation
+→ 128-bin log-Mel spectrogram
+→ AudioResNet
+→ forward pass
+→ loss calculation
+→ backward pass
+→ optimizer step
+→ validation inference
+
+IM
+<truncated 3102 bytes>
+7. Proceed with the minimal audio preprocessing fix.
+
+Context:
+- SATYA image module is working and must not be touched.
+- ASVspoof 2019 LA dataset is officially downloaded and checksum-verified.
+- 121,461 protocol-labelled FLAC files were audited with soundfile:
+  0 corrupt/unreadable, 16 kHz, mono.
+- The real-data smoke test failed immediately because src/audio/preprocess.py uses torchaudio.load(filepath), which invokes torchcodec/FFmpeg on this Windows environment and cannot load the required FFmpeg DLLs.
+- soundfile successfully decoded the ASVspoof FLAC files during the audit.
+- Smoke test was intentionally stopped; do not hide or bypass errors.
+
+TASK:
+1. Inspect the current installed torch/torchaudio/soundfile versions and current src/audio/preprocess.py.
+2. Confirm the safest minimal way to force/use the soundfile backend for the installed torchaudio version.
+3. Modify ONLY the audio preprocessing code required to make ASVspoof FLAC loading work through soundfile.
+4. Preserve:
+   - 16 kH
+<truncated 1519 bytes>
+8. AUTHORIZED: Implement the audio decoder architecture change.
+
+The compatibility audit confirmed:
+
+- torch 2.14.0+cpu
+- torchaudio 2.11.0+cpu
+- soundfile 0.14.0
+- torchaudio >=2.9 routes torchaudio.load() through TorchCodec
+- backend="soundfile" is ignored
+- set_audio_backend() is unavailable
+- ASVspoof FLAC files were successfully decoded with soundfile during the dataset audit
+
+Therefore bypass torchaudio.load() completely for file decoding.
+
+TASK:
+
+1. Modify ONLY src/audio/preprocess.py unless another audio file absolutely must change.
+2. Replace the torchaudio.load(filepath) decoding dependency with soundfile.read(filepath).
+3. Convert the returned NumPy waveform into a native PyTorch tensor.
+4. Preserve the existing preprocessing contract exactly:
+   - target sample rate = 16,000 Hz
+   - mono audio
+   - existing 5-second pad/truncate behavior
+   - existing 128 Mel-bin configuration
+   - existing log-Mel transformation
+   - existing tensor shape expected by AudioResNet
+5. Do NO
+<truncated 2158 bytes>
+9. SATYA AUDIO — BEGIN REAL TRAINING EXPERIMENT
+
+The ASVspoof real-data smoke test has PASSED.
+
+Verified:
+- soundfile.read() successfully replaces torchaudio.load()
+- ASVspoof FLAC loading works
+- Train subset: 128 real + 128 fake
+- Batch shape: [16, 1, 128, 157]
+- Forward pass: PASS
+- Backward pass: PASS
+- Optimizer step: PASS
+- Validation inference: PASS
+- NaN/Inf: PASS
+- Unreadable files: 0
+- Dropped examples: 0
+- Base audio tests: PASS
+
+IMPORTANT:
+This is now the first real ML experiment. Do NOT call the model production-ready.
+
+Before training, inspect the existing audio training code carefully.
+
+CRITICAL CLASS IMBALANCE:
+Official ASVspoof 2019 LA TRAIN:
+- Real: 2,580
+- Fake: 22,800
+
+DEV:
+- Real: 2,548
+- Fake: 22,296
+
+A naive all-fake classifier can obtain ~90% accuracy, so accuracy alone is NOT acceptable.
+
+TASK:
+
+1. Inspect the current AudioResNet training implementation.
+2. Determine whether it already handles class imbalance.
+3. If it does not, implement the sm
+<truncated 2596 bytes>
+10. SATYA — BUILD VIDEO + TEXT PIPELINES IN ONE CONTROLLED IMPLEMENTATION PASS
+
+We are temporarily pausing further full-scale Audio training.
+
+Your task is to implement the Video and Text modules for SATYA.
+
+IMPORTANT:
+This is an ENGINEERING + INTEGRATION phase, NOT scientific validation.
+
+Do NOT:
+- modify src/image/
+- modify the working EfficientNet-B0 image model
+- modify the image production threshold (0.50)
+- touch the ASVspoof EVAL data
+- claim Video or Text detection accuracy without real held-out evaluation
+- fabricate predictions
+- fabricate benchmark metrics
+- add random_split leakage
+- silently download datasets
+- automatically install packages
+- replace working components unnecessarily
+- create a fake "overall authenticity score"
+
+==================================================
+PART 1 — VIDEO
+==================================================
+
+Build a modular Video Forensics pipeline.
+
+Goal:
+
+video
+→ validate input
+→ extract sampled frames
+→ run the EX
+<truncated 5443 bytes>
+
+# Previous Session Summary:
+### 1. Outstanding User Requests
+
+*   **Audio Forensics: Full-Scale Training (Phase: IMPLEMENTATION):** Perform full training on the ASVspoof 2019 LA dataset. (Current state: Training script `train_audio.py` is running in the background on a subset. The model is unstable at batch sizes of 32 on the current CPU environment due to memory access violations; currently testing stability at batch size 16.)
+*   **Audio Forensics: Cross-Dataset Generalization Test (Phase: NOT STARTED):** Evaluate the trained model on the WaveFake dataset.
+*   **Video Forensics: Implementation (Phase: PLANNING/DISCOVERY):** Build a modular video forensics pipeline (`src/video/`) utilizing the existing EfficientNet-B0 image model to analyze sampled frames.
+*   **Text Forensics: Implementation (Phase: NOT STARTED):** Build a claim verification-focused text pipeline (`src/text/`) with status-based reporting (SUPPORTED/CONTESTED/etc.).
+*   **Unified API (Phase: NOT STARTED):** Extend the backend to include `POST /api/analyze/video` and `POST /api/analyze/text` without breaking existing image endpoints.
+*   **UI Integration (Phase: NOT STARTED):** Update the frontend to reflect new modalities (Video/Text) as "COMING SOON" or "PIPELINE READY".
+
+### 2. User Knowledge
+
+*   **Philosophy:** "See Beyond the Surface."
+*   **Rules:** Do not report smoke test results as final performance; do not modify official manifests; do not tune thresholds on the evaluation split; do not fabricate evidence/claims; do not hallucinate AI detection accuracy.
+*   **Constraint:** The system is CPU-bound; MKL/OpenMP thread contention causes crashes on Windows.
+*   **Explicit Instructions:** "This is an ENGINEERING + INTEGRATION phase, NOT scientific validation."
+
+### 3. Work Accomplished
+
+*   **Audio Stability:** Identified that `batch_size=32` consistently causes silent segfaults on CPU; `batch_size=16` is stable.
+*   **Audio Pipeline:** Successfully implemented `soundfile`-based loading, BCE loss with `pos_weight` for class imbalance, and integrated `AudioResNet`.
+*   **Audio Training:** Initiated a 3-epoch training run on 3,200 samples (batch size 16).
+*   **Infrastructure:** Audited ASVspoof dataset integrity (121k files checked).
+
+### 4. Model Knowledge
+
+*   **Architecture:** `AudioResNet` (2D CNN).
+*   **Stability:** Windows CPU environment requires specific thread management or lower batch sizes to avoid `0xC0000005` (access violation) errors in MKL-linked operations.
+*   **Inference:** `AudioResNet` input: `[1, 128, 157]` log-Mel spectrogram.
+*   **Integration:** Image module uses `EfficientNet-B0`. The proposed video pipeline must treat this as an external dependency, running frame-by-frame inference.
+
+### 5. Files and Code
+
+*   **Edited Files:**
+    *   `D:\fakeshield\training\train_audio.py`: Added class imbalance handling, debugging traces, and batch subsetting for limited runs.
+    *   `D:\fakeshield\src\audio\preprocess.py`: Replaced `torchaudio.load` with `soundfile.read` to avoid Windows/FFmpeg DLL issues.
+*   **Viewed Files:**
+    *   `D:\fakeshield\src\video/`, `src\text/`, `src\audio/`: Mapped existing directory structures to identify where new pipelines will reside.
+    *   `D:\fakeshield\src\audio\dataset.py`: Used as a reference for manifest-based data loading.
+
+### 6. Current Work and Next Steps
+
+*   **Current Work:** The audio training task (`task-757`) is active and processing epoch 1.
+*   **Next Steps:**
+    1.  Wait for audio training completion and evaluate the resulting `best_model.pth`.
+    2.  Start `src/video/` directory setup following the modular design (preprocess, frame_extractor, inference).
+    3.  Identify the API entry point (likely a framework like Flask or FastAPI) to implement new endpoints. The user explicitly requested to continue work on the Video/Text pipelines now.
+    4.  Verify API structure before modifying, as the previous attempts to locate `main.py` failed.
+
+You have the 4 following artifacts written to the artifacts directory:
+
+[ARTIFACT: audio_audit_report]
+Path: file:///C:/Users/RAJIB%20GAIN/.gemini/antigravity-ide/brain/00346ff9-26e0-4935-8fbf-e01c62b901d7/audio_audit_report.md
+Last Edited: 2026-09-12T05:42:51Z
+
+[ARTIFACT: implementation_plan]
+Path: file:///C:/Users/RAJIB%20GAIN/.gemini/antigravity-ide/brain/00346ff9-26e0-4935-8fbf-e01c62b901d7/implementation_plan.md
+Last Edited: 2026-09-12T08:23:09Z
+
+[ARTIFACT: task]
+Path: file:///C:/Users/RAJIB%20GAIN/.gemini/antigravity-ide/brain/00346ff9-26e0-4935-8fbf-e01c62b901d7/task.md
+Last Edited: 2026-09-12T08:23:23Z
+
+[ARTIFACT: walkthrough]
+Path: file:///C:/Users/RAJIB%20GAIN/.gemini/antigravity-ide/brain/00346ff9-26e0-4935-8fbf-e01c62b901d7/walkthrough.md
+Last Edited: 2026-09-12T05:36:51Z
+
+# Running Background Tasks
+The following background tasks were running at the time this checkpoint was created.
+Use the manage_task tool to interact with them (e.g. to kill them or check their status).
+
+{
+  "taskId": "00346ff9-26e0-4935-8fbf-e01c62b901d7/task-757",
+  "toolName": "run_command",
+  "toolSummary": "Running training script 3 epochs",
+  "description": ".\\venv\\Scripts\\python.exe -u training\\train_audio.py --train-manifest data\\processed\\audio_asvspoof2019\\manifest_train.csv --val-manifest data\\processed\\audio_asvspoof2019\\manifest_dev.csv --epochs 3 --batch-size 16 --limit 3200",
+  "startTime": "2026-09-12T08:42:20.536324100Z",
+  "stepIndex": 757,
+  "logUri": "file:///C:/Users/RAJIB%20GAIN/.gemini/antigravity-ide/brain/00346ff9-26e0-4935-8fbf-e01c62b901d7/.system_generated/tasks/task-757.log"
+}
+
+# Conversation Logs
+
+Reference the following log files for the full, untruncated conversation:
+
+- C:\Users\RAJIB GAIN\.gemini\antigravity-ide\brain\00346ff9-26e0-4935-8fbf-e01c62b901d7\.system_generated\logs\transcript.jsonl
+
+**IMPORTANT: this summary is just for your reference. You may respond to my previous and future messages, but DO NOT ACKNOWLEDGE THIS CHECKPOINT MESSAGE. JUST READ IT BUT DO NOT MENTION IT, RESPOND TO IT, OR TAKE ACTION BECAUSE OF IT.**Created At: 2026-09-12T14:17:29+05:30
+Completed At: 2026-09-12T14:17:29+05:30
+File Path: `file:///D:/fakeshield/prompt.txt`
+Total Lines: 151
+Total Bytes: 4270
+Showing lines 1 to 151
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+1: <USER_REQUEST>
+2: SATYA — BUILD VIDEO + TEXT PIPELINES IN ONE CONTROLLED IMPLEMENTATION PASS
+3: 
+4: We are temporarily pausing further full-scale Audio training.
+5: 
+6: Your task is to implement the Video and Text modules for SATYA.
+7: 
+8: IMPORTANT:
+9: This is an ENGINEERING + INTEGRATION phase, NOT scientific validation.
+10: 
+11: Do NOT:
+12: - modify src/image/
+13: - modify the working EfficientNet-B0 image model
+14: - modify the image production threshold (0.50)
+15: - touch the ASVspoof EVAL data
+16: - claim Video or Text detection accuracy without real held-out evaluation
+17: - fabricate predictions
+18: - fabricate benchmark metrics
+19: - add random_split leakage
+20: - silently download datasets
+21: - automatically install packages
+22: - replace working components unnecessarily
+23: - create a fake "overall authenticity score"
+24: 
+25: ==================================================
+26: PART 1 — VIDEO
+27: ==================================================
+28: 
+29: Build a modular Video Forensics pipeline.
+30: 
+31: Goal:
+32: 
+33: video
+34: → validate input
+35: → extract sampled frames
+36: → run the EXISTING SATYA image forensic model on frames
+37: → collect frame-level probabilities
+38: → aggregate evidence
+39: → produce a transparent video forensic report.
+40: 
+41: Do NOT train a dedicated video neural network yet.
+42: 
+43: Reuse the existing verified EfficientNet-B0 image inference pipeline wherever appropriate.
+44: 
+45: Implement:
+46: 
+47: src/video/
+48:     __init__.py
+49:     preprocess.py
+50:     frame_extractor.py
+51:     inference.py
+52:     evaluate.py
+53:     README_VIDEO.md
+54: 
+55: Video pipeline requirements:
+56: 
+57: 1. Accept common video formats only when actually supported by the installed decoder.
+58: 2. Validate the file before processing.
+59: 3. Sample frames at a controlled interval rather than processing every frame.
+60: 4. Make sampling configurable.
+61: 5. Never load an entire long video into RAM unnecessarily.
+62: 6. Run the existing image model on sampled frames.
+63: 7. Record:
+64:    - number of frames sampled
+65:    - frame timestamps
+66:    - per-frame fake probability
+67:    - mean fake probability
+68:    - median fake probability
+69:    - maximum fake pro
+70: <truncated 2862 bytes>
+71: =================================
+72: 
+73: Create tests for:
+74: 
+75: VIDEO:
+76: - valid input
+77: - corrupt input
+78: - frame extraction
+79: - sampling
+80: - empty/no-frame condition
+81: - image-model integration
+82: - probability aggregation
+83: - NaN/Inf
+84: - API response
+85: 
+86: TEXT:
+87: - empty input
+88: - short input
+89: - multiple claims
+90: - claim extraction
+91: - no evidence provider
+92: - evidence status handling
+93: - API response
+94: - no fabricated evidence
+95: 
+96: Run all existing tests.
+97: 
+98: Run:
+99: 
+100: tests\test_audio.py
+101: 
+102: to ensure Audio remains unaffected.
+103: 
+104: Run image inference/API smoke tests to ensure Image remains unaffected.
+105: 
+106: ==================================================
+107: PART 6 — FINAL AUDIT
+108: ==================================================
+109: 
+110: Before reporting completion, inspect the implementation for:
+111: 
+112: - hardcoded predictions
+113: - fabricated probabilities
+114: - fabricated sources
+115: - random train/test splitting
+116: - data leakage
+117: - automatic downloads
+118: - automatic package installation
+119: - silent failures
+120: - unsupported file formats
+121: - misleading scientific terminology
+122: - accidental modification of Image
+123: - accidental use of ASVspoof EVAL
+124: - broken existing API endpoints
+125: 
+126: Report:
+127: 
+128: 1. Files created
+129: 2. Files modified
+130: 3. Files intentionally untouched
+131: 4. Tests executed
+132: 5. Test results
+133: 6. Video pipeline status
+134: 7. Text pipeline status
+135: 8. Known limitations
+136: 9. Anything requiring real datasets or external evidence services
+137: 10. Exact next recommended step
+138: 
+139: Do not call the Video or Text modules production-ready or scientifically validated unless actual validation has been performed.
+140: </USER_REQUEST>
+141: <ADDITIONAL_METADATA>
+142: The current local time is: 2026-09-12T14:15:31+05:30.
+143: 
+144: The user's current state is as follows:
+145: Other open documents:
+146: - d:\fakeshield\frontend\js\app.js (LANGUAGE_JAVASCRIPT)
+147: - d:\fakeshield\frontend\js\analyzer.js (LANGUAGE_JAVASCRIPT)
+148: - d:\fakeshield\README_AI_GENERATED.md (LANGUAGE_MARKDOWN)
+149: - d:\fakeshield\tools\inspect_ai_dataset.py (LANGUAGE_PYTHON)
+150: - d:\fakeshield\src\ai_generated\dataset.py (LANGUAGE_PYTHON)
+151: </ADDITIONAL_METADATA>
+The above content shows the entire, complete file contents of the requested file.

@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SATYA — Digital Image Forensics</title>
+  <meta name="description" content="AI-powered multimodal digital forensics. See Beyond the Surface.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════
+       NAVIGATION
+       ════════════════════════════════════════════ -->
+  <nav class="nav" id="main-nav">
+    <a href="#home" class="nav__brand" data-section="home">
+      SAT<span>YA</span>
+    </a>
+
+    <button class="nav__toggle" id="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+
+    <div class="nav__links" id="nav-links">
+      <a href="#analyze" class="nav__link" data-section="analyze" data-mode="image">Image</a>
+      <span class="nav__link" style="opacity: 0.5; cursor: not-allowed;">Audio <span class="badge" style="font-size: 9px; padding: 2px 4px; border: none; background: rgba(255,255,255,0.1); margin-left: 4px;">COMING SOON</span></span>
+      <a href="#analyze" class="nav__link" data-section="analyze" data-mode="video">Video <span class="badge" style="font-size: 9px; padding: 2px 4px; border: none; background: rgba(5,204,181,0.2); color: var(--accent); margin-left: 4px;">PIPELINE READY</span></a>
+      <a href="#analyze" class="nav__link" data-section="analyze" data-mode="text">Text <span class="badge" style="font-size: 9px; padding: 2px 4px; border: none; background: rgba(5,204,181,0.2); color: var(--accent); margin-left: 4px;">PIPELINE READY</span></a>
+      <a href="#methodology" class="nav__link" data-section="methodology">Methodology</a>
+      <a href="#limitations" class="nav__link" data-section="limitations">Limitations</a>
+      <a href="#analyze" class="nav__cta" data-section="analyze">Start Analysis <span class="btn__arrow">→</span></a>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════════════════
+       SECTION: HOME / HERO
+       ════════════════════════════════════════════ -->
+  <section class="section hero active" id="section-home">
+    <div class="container">
+      <div class="hero__content">
+        <div class="eyebrow hero-enter">SATYA / Digital Image Forensics</div>
+
+        <h1 class="hero__headline hero-enter">
+          See what the<br>eye <em>misses.</em>
+        </h1>
+
+        <p class="hero__description hero-enter" style="font-size: var(--text-lg); font-weight: var(--weight-medium); color: var(--text-primary); margin-bottom: var(--space-2);">
+          "See Beyond the Surface."
+        </p>
+        <p class="hero__description hero-enter">
+          AI-powered multimodal digital forensics.
+        </p>
+
+        <div class="hero__actions hero-enter">
+          <a href="#analyze" class="btn btn--primary" data-section="analyze">
+            Analyze an image <span class="btn__arrow">→</span>
+          </a>
+          <a href="#methodology" class="btn btn--secondary" data-section="methodology">
+            How it works
+          </a>
+        </div>
+      </div>
+
+      <!-- Hero visual: forensic scan frame -->
+      <div class="hero__visual hero-enter">
+        <div class="hero__grid"></div>
+        <div class="hero__scan-frame"></div>
+        <div class="hero__scan-line"></div>
+        <div class="hero__corner hero__corner--tl"></div>
+        <div class="hero__corner hero__corner--tr"></div>
+        <div class="hero__corner hero__corner--bl"></div>
+        <div class="hero__corner hero__corner--br"></div>
+        <span class="hero__label hero__label--coord">x:0 y:0 / 224×224</span>
+        <span class="hero__label hero__label--prob">P(fake) = —</span>
+        <div class="hero__indicator">
+          <span class="hero__indicator-dot"></span>
+          Model ready
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       SECTION: ANALYZE
+       ════════════════════════════════════════════ -->
+  <section class="section analyze" id="section-analyze">
+    <div class="container">
+      <div class="analyze__header reveal">
+        <div class="eyebrow">Forensic Analysis</div>
+        <h2 class="analyze__title">Submit an image for analysis</h2>
+        <p class="analyze__subtitle">
+          Drop an image below to begin the forensic assessment process.
+        </p>
+      </div>
+
+      <div class="analyze__workspace">
+        <!-- Upload Zone -->
+        <div class="upload-zone reveal" id="upload-zone">
+          <svg class="upload-zone__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M8 32l10-10 8 8 6-6 8 8" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="4" y="6" width="40" height="36" rx="3" stroke-linecap="round"/>
+            <circle cx="16" cy="17" r="3"/>
+          </svg>
+          <div class="upload-zone__title" id="upload-title">Drop image for forensic analysis</div>
+          <div class="upload-zone__subtitle">or click to browse files</div>
+          <div class="upload-zone__formats" id="upload-formats">Supported: JPG / JPEG / PNG</div>
+          <div class="upload-zone__privacy">Local processing — file not uploaded to external servers</div>
+          <input type="file" id="file-input" accept="image/jpeg,image/png,image/jpg" hidden>
+        </div>
+
+        <!-- Image Preview -->
+        <div class="preview" id="preview">
+          <div class="preview__image-wrap">
+            <img id="preview-image" class="preview__image" alt="File preview">
+          </div>
+          <div class="preview__meta">
+            <div class="preview__meta-item">
+              <span class="preview__meta-label">Filename</span>
+              <span class="preview__meta-value" id="meta-filename">—</span>
+            </div>
+            <div class="preview__meta-item">
+              <span class="preview__meta-label">Dimensions</span>
+              <span class="preview__meta-value" id="meta-dimensions">—</span>
+            </div>
+            <div class="preview__meta-item">
+              <span class="preview__meta-label">File size</span>
+              <span class="preview__meta-value" id="meta-filesize">—</span>
+            </div>
+            <div class="preview__meta-item">
+              <span class="preview__meta-label">Format</span>
+              <span class="preview__meta-value" id="meta-filetype">—</span>
+            </div>
+          </div>
+          <div class="preview__actions">
+            <button class="btn btn--accent" id="btn-analyze">
+              Analyze file <span class="btn__arrow">→</span>
+            </button>
+            <button class="btn btn--ghost" id="btn-remove">Replace file</button>
+          </div>
+        </div>
+
+        <!-- Scanner Overlay -->
+        <div class="scanner" id="scanner">
+          <div class="scanner__image-wrap">
+            <img id="scanner-image" class="scanner__image" alt="Scanning">
+            <div class="scanner__line"></div>
+          </div>
+          <div class="scanner__status">
+            <div class="scanner__stage" id="scanner-stage"></div>
+            <div class="scanner__progress-track">
+              <div class="scanner__progress-fill" id="scanner-progress-fill"></div>
+            </div>
+            <div class="scanner__percent" id="scanner-percent">0%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       SECTION: RESULTS
+       ════════════════════════════════════════════ -->
+  <section class="section results" id="section-results">
+    <div class="container">
+            <div style="text-align: center; margin-bottom: 48px;">
+        <h2 style="font-size: 28px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.02em;">FORENSIC EVIDENCE SUMMARY</h2>
+      </div>
+
+      <!-- AI ASSESSMENT SECTION -->
+      <div class="results__forensic-signals" style="margin-bottom: 48px; border-bottom: 1px solid var(--border); padding-bottom: 48px;">
+        <div class="eyebrow" style="color: var(--accent);">MODEL ASSESSMENT</div>
+        <div class="results__verdict-area" style="margin-top: 16px;">
+          <h3 class="results__verdict" id="results-verdict">—</h3>
+          <p class="results__assessment" id="results-assessment"></p>
+        </div>
+
+        <div class="results__visual">
+          <div class="results__image-wrap">
+            <img id="results-image" class="results__image" alt="Analyzed image">
+          </div>
+        </div>
+
+        <!-- Probability Rings -->
+        <div class="results__probabilities">
+          <div class="results__prob-item">
+            <div class="prob-ring" id="ring-fake">
+              <svg class="prob-ring__svg" viewBox="0 0 240 240">
+                <circle class="prob-ring__bg" cx="120" cy="120" r="105"/>
+                <circle class="prob-ring__fill" cx="120" cy="120" r="105"
+                        stroke-dasharray="660" stroke-dashoffset="660"/>
+              </svg>
+              <div class="prob-ring__label">
+                <span class="prob-ring__value" id="fake-pct">0.0%</span>
+                <span class="prob-ring__caption">Fake Probability</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="results__prob-item">
+            <div class="prob-ring" id="ring-real">
+              <svg class="prob-ring__svg" viewBox="0 0 240 240">
+                <circle class="prob-ring__bg" cx="120" cy="120" r="105"/>
+                <circle class="prob-ring__fill" cx="120" cy="120" r="105"
+                        stroke-dasharray="660" stroke-dashoffset="660"/>
+              </svg>
+              <div class="prob-ring__label">
+                <span class="prob-ring__value" id="real-pct">0.0%</span>
+                <span class="prob-ring__caption">Real Probability</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Probability Scale Bar -->
+        <div class="results__prob-scale-container">
+          <div class="results__prob-scale-labels">
+            <span class="results__prob-scale-label">FAKE 0%</span>
+            <span class="results__prob-scale-label">100% REAL</span>
+          </div>
+          <div class="results__prob-scale-track">
+            <div class="results__prob-scale-marker" id="prob-scale-marker"></div>
+          </div>
+        </div>
+
+        <!-- Meta info -->
+        <div class="results__meta-grid">
+          <div class="results__meta-item">
+            <div class="results__meta-label">Model</div>
+            <div class="results__meta-value" id="meta-model">—</div>
+          </div>
+          <div class="results__meta-item">
+            <div class="results__meta-label">Input Size</div>
+            <div class="results__meta-value" id="detail-input">—</div>
+          </div>
+          <div class="results__meta-item">
+            <div class="results__meta-label">Threshold</div>
+            <div class="results__meta-value" id="meta-threshold">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI GENERATION DETECTION -->
+      <div style="margin-bottom: 48px; border-bottom: 1px solid var(--border); padding-bottom: 48px;">
+        <div class="eyebrow" style="color: var(--accent);">AI GENERATION DETECTOR</div>
+        <div class="results__verdict-area" style="margin-top: 16px; margin-bottom: 24px;">
+          <h3 class="results__verdict" id="ai-verdict">—</h3>
+        </div>
+        
+        <div style="background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden;">
+          <div class="details-panel__content" style="padding: 0;">
+            <div class="details-panel__row" style="padding: 16px; border-bottom: 1px solid var(--border); margin: 0;">
+              <span class="details-panel__key">AI-Generated Probability</span>
+              <span class="details-panel__val" id="ai-prob">—</span>
+            </div>
+            <div class="details-panel__row" style="padding: 16px; margin: 0;">
+              <span class="details-panel__key">Detector Status</span>
+              <span class="details-panel__val" id="ai-status">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMPUTED FORENSIC EVIDENCE -->
+      
+      <!-- INTEGRITY SECTION -->
+      <div style="margin-bottom: 48px;">
+        <div class="eyebrow">COMPUTED FORENSIC EVIDENCE</div>
+        <h3 style="font-size: var(--text-xl); font-weight: var(--weight-semibold); color: var(--text-primary); margin-top: 16px; margin-bottom: 16px;">File Integrity &amp; Encoding</h3>
+        <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5; max-width: 600px;">
+          Encoding properties describe how the current image file is stored. They are not, by themselves, proof of originality or manipulation.
+        </p>
+        <div id="integrity-note" style="font-size: 13px; color: #ffb86c; margin-bottom: 24px; line-height: 1.5; display: none;"></div>
+        
+        <div style="background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden;">
+          <div class="details-panel__content" style="padding: 0;">
+            <div class="details-panel__row" style="padding: 16px; border-bottom: 1px solid var(--border); margin: 0;">
+              <span class="details-panel__key">Detected Format</span>
+              <span class="details-panel__val" id="integrity-format">—</span>
+            </div>
+            <div class="details-panel__row" style="padding: 16px; border-bottom: 1px solid var(--border); margin: 0;">
+              <span class="details-panel__key">Dimensions</span>
+              <span class="details-panel__val" id="integrity-dims">—</span>
+            </div>
+            <div class="details-panel__row" style="padding: 16px; border-bottom: 1px solid var(--border); margin: 0;">
+              <span class="details-panel__key">Color Mode</span>
+              <span class="details-panel__val" id="integrity-color-mode">—</span>
+            </div>
+            <div class="details-panel__row" style="padding: 16px; border-bottom: 1px solid var(--border); margin: 0;">
+              <span class="details-panel__key">File Size</span>
+              <span class="details-panel__val" id="integrity-filesize">—</span>
+            </div>
+            <div class="details-panel__row" style="padding: 16px; border-bottom: 1px solid var(--border); margin: 0;">
+              <span class="details-panel__key">ICC Profile</span>
+              <span class="details-panel__val" id="integrity-icc">—</span>
+            </div>
+            <div id="integrity-jpeg-props" style="display: none;">
+              <div class="details-panel__row" style="padding: 16px; border-bottom: 1px solid var(--border); margin: 0;">
+                <span class="details-panel__key">JPEG Encoding</span>
+                <span class="details-panel__val" id="integrity-jpeg-encoding">—</span>
+              </div>
+              <div class="details-panel__row" style="padding: 16px; border-bottom: 1px solid var(--border); margin: 0;">
+                <span class="details-panel__key">Subsampling</span>
+                <span class="details-panel__val" id="integrity-subsampling">—</span>
+              </div>
+              <div class="details-panel__row" style="padding: 16px; margin: 0;">
+                <span class="details-panel__key">Quantization Tables</span>
+                <span class="details-panel__val" id="integrity-quantization">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- METADATA SECTION -->
+      <div style="margin-bottom: 48px;">
+        <h3 style="font-size: var(--text-xl); font-weight: var(--weight-semibold); color: var(--text-primary); margin-bottom: 16px;">Metadata Forensics</h3>
+        <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5; max-width: 600px;">
+          Metadata can be stripped, altered, or lost during image processing. Its absence is not evidence of manipulation.
+        </p>
+        
+        <div style="background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden;">
+          <div class="details-panel__content" style="padding: 0;">
+            <div class="details-panel__row" style="padding: 16px; border-bottom: 1px solid var(--border); margin: 0;">
+              <span class="details-panel__key">EXIF</span>
+              <span class="details-panel__val" id="meta-exif">—</span>
+            </div>
+            <div class="details-panel__row" style="padding: 16px; border-bottom: 1px solid var(--border); margin: 0;">
+              <span class="details-panel__key">Camera</span>
+              <span class="details-panel__val" id="meta-camera">—</span>
+            </div>
+            <div class="details-panel__row" style="padding: 16px; border-bottom: 1px solid var(--border); margin: 0;">
+              <span class="details-panel__key">Software</span>
+              <span class="details-panel__val" id="meta-software">—</span>
+            </div>
+            <div class="details-panel__row" style="padding: 16px; border-bottom: 1px solid var(--border); margin: 0;">
+              <span class="details-panel__key">Capture Time</span>
+              <span class="details-panel__val" id="meta-capture-time">—</span>
+            </div>
+            <div class="details-panel__row" style="padding: 16px; border-bottom: 1px solid var(--border); margin: 0;">
+              <span class="details-panel__key">GPS</span>
+              <span class="details-panel__val" id="meta-gps">—</span>
+            </div>
+            <div class="details-panel__row" style="padding: 16px; margin: 0;">
+              <span class="details-panel__key">Dimensions</span>
+              <span class="details-panel__val" id="meta-dims">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ERROR LEVEL ANALYSIS SECTION -->
+      <div style="margin-bottom: 48px;">
+        <h3 style="font-size: var(--text-xl); font-weight: var(--weight-semibold); color: var(--text-primary); margin-bottom: 16px;">Error Level Analysis</h3>
+        <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5; max-width: 600px;">
+          ELA highlights differences introduced by controlled JPEG recompression. Localized differences may provide supporting forensic context, but ELA alone cannot establish whether an image has been manipulated.
+        </p>
+        <div id="ela-note" style="font-size: 13px; color: #ffb86c; margin-bottom: 24px; line-height: 1.5; display: none;"></div>
+        
+        <div style="margin-bottom: 24px; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; background: #000;">
+          <img id="ela-image" src="" alt="ELA Visualization" style="display: none; width: 100%; height: auto; image-rendering: pixelated;">
+        </div>
+
+        <div style="background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden;">
+          <div class="details-panel__content" style="padding: 0;">
+            <div class="details-panel__row" style="padding: 16px; border-bottom: 1px solid var(--border); margin: 0;">
+              <span class="details-panel__key">Format Analyzed</span>
+              <span class="details-panel__val" id="ela-format">—</span>
+            </div>
+            <div class="details-panel__row" style="padding: 16px; border-bottom: 1px solid var(--border); margin: 0;">
+              <span class="details-panel__key">Test Quality</span>
+              <span class="details-panel__val" id="ela-quality">—</span>
+            </div>
+            <div class="details-panel__row" style="padding: 16px; border-bottom: 1px solid var(--border); margin: 0;">
+              <span class="details-panel__key">Mean Error</span>
+              <span class="details-panel__val" id="ela-mean">—</span>
+            </div>
+            <div class="details-panel__row" style="padding: 16px; margin: 0;">
+              <span class="details-panel__key">Max Error</span>
+              <span class="details-panel__val" id="ela-max">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VISUAL FORENSIC SIGNALS SECTION -->
+      <div id="forensic-signals-section" style="display: none; margin-bottom: 48px;">
+        <h3 style="font-size: var(--text-xl); font-weight: var(--weight-semibold); color: var(--text-primary); margin-bottom: 16px;">Analytical Visualizations</h3>
+        <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 32px; line-height: 1.5; max-width: 600px;">
+          These visualizations expose low-level image characteristics such as noise, local variation, edges, and compression structure. They are contextual forensic evidence, not standalone proof of manipulation.
+        </p>
+
+        <div class="grid grid--2" style="gap: 24px;">
+          
+          <!-- Noise Residual -->
+          <div class="signal-card" id="card-noise" style="display: none; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; background: var(--bg-surface);">
+            <div style="padding: 16px; border-bottom: 1px solid var(--border);">
+              <h4 style="font-size: 12px; font-weight: 600; color: var(--text-primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">Noise Residual</h4>
+              <p style="font-size: 11px; color: var(--text-tertiary); line-height: 1.4;">
+                Noise residuals show high-frequency differences remaining after smoothing. Natural texture, sharpening, denoising, resizing, and compression can all affect this signal.
+              </p>
+            </div>
+            <div style="background: #000; padding: 1px;">
+              <img id="img-noise" src="" alt="Noise Residual Visualization" style="width: 100%; height: auto; display: block; image-rendering: pixelated;">
+            </div>
+            <div style="padding: 12px 16px; display: flex; justify-content: space-between; font-size: 11px; color: var(--text-secondary); border-top: 1px solid var(--border);">
+              <span>Mean: <span id="val-noise-mean" style="color: var(--text-primary);">—</span></span>
+              <span>Max: <span id="val-noise-max" style="color: var(--text-primary);">—</span></span>
+            </div>
+          </div>
+
+          <!-- Local Variation -->
+          <div class="signal-card" id="card-variation" style="display: none; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; background: var(--bg-surface);">
+            <div style="padding: 16px; border-bottom: 1px solid var(--border);">
+              <h4 style="font-size: 12px; font-weight: 600; color: var(--text-primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">Local Variation</h4>
+              <p style="font-size: 11px; color: var(--text-tertiary); line-height: 1.4;">
+                Local variation describes how pixel intensity changes across neighboring regions. High variation can occur naturally around edges, textures, and detailed objects.
+              </p>
+            </div>
+            <div style="background: #000; padding: 1px;">
+              <img id="img-variation" src="" alt="Local Variation Visualization" style="width: 100%; height: auto; display: block; image-rendering: pixelated;">
+            </div>
+            <div style="padding: 12px 16px; display: flex; justify-content: space-between; font-size: 11px; color: var(--text-secondary); border-top: 1px solid var(--border);">
+              <span>Mean: <span id="val-var-mean" style="color: var(--text-primary);">—</span></span>
+              <span>Max: <span id="val-var-max" style="color: var(--text-primary);">—</span></span>
+            </div>
+          </div>
+
+          <!-- Edge Structure -->
+          <div class="signal-card" id="card-edges" style="display: none; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; background: var(--bg-surface);">
+            <div style="padding: 16px; border-bottom: 1px solid var(--border);">
+              <h4 style="font-size: 12px; font-weight: 600; color: var(--text-primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">Edge Structure</h4>
+              <p style="font-size: 11px; color: var(--text-tertiary); line-height: 1.4;">
+                Edge density describes the proportion of pixels exhibiting strong local intensity changes. It is influenced by image content and processing.
+              </p>
+            </div>
+            <div style="background: #000; padding: 1px;">
+              <img id="img-edges" src="" alt="Edge Structure Visualization" style="width: 100%; height: auto; display: block; image-rendering: pixelated;">
+            </div>
+            <div style="padding: 12px 16px; display: flex; justify-content: space-between; font-size: 11px; color: var(--text-secondary); border-top: 1px solid var(--border);">
+              <span>Density: <span id="val-edge-density" style="color: var(--text-primary);">—</span></span>
+            </div>
+          </div>
+
+          <!-- JPEG Artifacts -->
+          <div class="signal-card" id="card-jpeg" style="display: none; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; background: var(--bg-surface);">
+            <div style="padding: 16px; border-bottom: 1px solid var(--border);">
+              <h4 style="font-size: 12px; font-weight: 600; color: var(--text-primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">JPEG Artifacts</h4>
+              <p style="font-size: 11px; color: var(--text-tertiary); line-height: 1.4;">
+                JPEG artifact analysis examines image structure associated with JPEG compression. Compression artifacts alone do not establish manipulation.
+              </p>
+            </div>
+            <div style="background: #000; padding: 1px;">
+              <img id="img-jpeg" src="" alt="JPEG Artifacts Visualization" style="width: 100%; height: auto; display: block; image-rendering: pixelated;">
+            </div>
+            <div style="padding: 12px 16px; display: flex; justify-content: space-between; font-size: 11px; color: var(--text-secondary); border-top: 1px solid var(--border);">
+              <span>8×8 Block Discontinuity Map</span>
+            </div>
+          </div>
+
+          <!-- Frequency Domain -->
+          <div class="signal-card" id="card-fft" style="display: none; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; background: var(--bg-surface);">
+            <div style="padding: 16px; border-bottom: 1px solid var(--border);">
+              <h4 style="font-size: 12px; font-weight: 600; color: var(--text-primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">Frequency Domain</h4>
+              <p style="font-size: 11px; color: var(--text-tertiary); line-height: 1.4;">
+                The frequency-domain view represents spatial image information in terms of frequency components. Patterns depend strongly on image content and processing history.
+              </p>
+            </div>
+            <div style="background: #000; padding: 1px;">
+              <img id="img-fft" src="" alt="Frequency Domain Visualization" style="width: 100%; height: auto; display: block; image-rendering: pixelated;">
+            </div>
+            <div style="padding: 12px 16px; display: flex; justify-content: space-between; font-size: 11px; color: var(--text-secondary); border-top: 1px solid var(--border);">
+              <span>Log Magnitude (Shifted)</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- EVIDENCE INTERPRETATION SECTION -->
+      <div style="margin-bottom: 64px; padding: 24px; background: rgba(5, 204, 181, 0.05); border: 1px solid rgba(5, 204, 181, 0.2); border-radius: var(--radius-md);">
+        <h4 style="font-size: 14px; font-weight: 600; color: var(--accent); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;">Evidence Interpretation</h4>
+        <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">
+          SATYA presents multiple independent image characteristics alongside a learned visual assessment. These signals provide forensic context but should not be treated as definitive proof of image origin or manipulation.
+        </p>
+      </div>
+
+      <!-- Actions -->
+      <div class="results__actions" style="border-top: 1px solid var(--border); padding-top: 48px;">
+        <button class="btn btn--primary" id="btn-analyze-another">
+          Analyze another file <span class="btn__arrow">→</span>
+        </button>
+      </div>
+<!-- ════════════════════════════════════════════
+       SECTION: METHODOLOGY
+       ════════════════════════════════════════════ -->
+  <section class="section methodology" id="section-methodology">
+    <div class="container">
+      <div class="methodology__header reveal">
+        <div class="eyebrow">Methodology</div>
+        <h2 class="methodology__title">How SATYA works</h2>
+        <p class="methodology__desc">
+          SATYA uses a convolutional neural network trained to distinguish between authentic and manipulated images. The pipeline processes each image through a series of well-defined stages.
+        </p>
+      </div>
+
+      <!-- Pipeline visual -->
+      <div class="methodology__flow reveal">
+        <span class="methodology__flow-item">IMAGE</span>
+        <span class="methodology__flow-arrow">→</span>
+        <span class="methodology__flow-item">PREPROCESSING</span>
+        <span class="methodology__flow-arrow">→</span>
+        <span class="methodology__flow-item">EFFICIENTNET-B0</span>
+        <span class="methodology__flow-arrow">→</span>
+        <span class="methodology__flow-item">PROBABILITY</span>
+        <span class="methodology__flow-arrow">→</span>
+        <span class="methodology__flow-item">FORENSIC ASSESSMENT</span>
+      </div>
+
+      <!-- Pipeline Steps -->
+      <div class="methodology__pipeline stagger">
+        <div class="pipeline-step reveal">
+          <div class="pipeline-step__marker">01</div>
+          <div class="pipeline-step__content">
+            <div class="pipeline-step__title">UPLOAD</div>
+            <p class="pipeline-step__desc">
+              Provide an image for analysis.
+            </p>
+          </div>
+        </div>
+
+        <div class="pipeline-step reveal">
+          <div class="pipeline-step__marker">02</div>
+          <div class="pipeline-step__content">
+            <div class="pipeline-step__title">PREPROCESS</div>
+            <p class="pipeline-step__desc">
+              The image is normalized to 224 × 224 pixels.
+            </p>
+          </div>
+        </div>
+
+        <div class="pipeline-step reveal">
+          <div class="pipeline-step__marker">03</div>
+          <div class="pipeline-step__content">
+            <div class="pipeline-step__title">ANALYZE</div>
+            <p class="pipeline-step__desc">
+              EfficientNet-B0 evaluates visual features.
+            </p>
+          </div>
+        </div>
+
+        <div class="pipeline-step reveal">
+          <div class="pipeline-step__marker">04</div>
+          <div class="pipeline-step__content">
+            <div class="pipeline-step__title">ASSESS</div>
+            <p class="pipeline-step__desc">
+              The model produces real/fake probabilities and a probabilistic forensic assessment.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Benchmarks -->
+      <div class="methodology__benchmarks reveal">
+        <div class="methodology__benchmarks-label">Held-out test benchmark</div>
+        <div class="grid grid--3 stagger">
+          <div class="metric reveal">
+            <div class="metric__value">79.4%</div>
+            <div class="metric__label">Test Accuracy</div>
+          </div>
+          <div class="metric reveal">
+            <div class="metric__value">80.5%</div>
+            <div class="metric__label">Test F1 Score</div>
+          </div>
+          <div class="metric reveal">
+            <div class="metric__value">88.3%</div>
+            <div class="metric__label">ROC-AUC</div>
+          </div>
+        </div>
+
+        <div class="methodology__disclaimer reveal">
+          <p>
+            These metrics were measured on a held-out test dataset that was never used during training or threshold selection. They represent the model's performance on that specific dataset and should not be interpreted as guarantees of accuracy on all images.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       SECTION: LIMITATIONS
+       ════════════════════════════════════════════ -->
+  <section class="section limitations" id="section-limitations">
+    <div class="container">
+      <div class="limitations__header reveal">
+        <div class="eyebrow">Important Limitations</div>
+        <h2 class="limitations__title">What this model cannot do</h2>
+        <p class="limitations__subtitle">
+          SATYA is a research tool, not an oracle. Understanding these limitations is essential for responsible use.
+        </p>
+      </div>
+
+      <div class="limitations__grid stagger">
+        <div class="limitation reveal">
+          <div class="limitation__title">Probabilistic, Not Definitive</div>
+          <p class="limitation__desc">
+            Every prediction is a probability estimate. A "Likely Fake" verdict means the model assigns a higher probability to manipulation — it does not constitute proof. Decisions based on these results should always involve human judgment.
+          </p>
+        </div>
+
+        <div class="limitation reveal">
+          <div class="limitation__title">False Positives Occur</div>
+          <p class="limitation__desc">
+            Authentic images may be incorrectly classified as manipulated. Unusual lighting, heavy compression, artistic filters, or uncommon camera sensors can trigger false positives. The model's test precision is 76.4%, meaning roughly 1 in 4 "fake" predictions may be incorrect.
+          </p>
+        </div>
+
+        <div class="limitation reveal">
+          <div class="limitation__title">False Negatives Occur</div>
+          <p class="limitation__desc">
+            Sophisticated manipulations may evade detection. The model's test recall is 85.0%, meaning approximately 15% of manipulated images in the test set were not detected. New generation techniques may produce even lower detection rates.
+          </p>
+        </div>
+
+        <div class="limitation reveal">
+          <div class="limitation__title">Domain Sensitivity</div>
+          <p class="limitation__desc">
+            The model was trained on a specific dataset. Images from significantly different domains — different cameras, resolutions, compression levels, or manipulation techniques — may produce less reliable results than the benchmark metrics suggest.
+          </p>
+        </div>
+
+        <div class="limitation reveal">
+          <div class="limitation__title">Not Forensic Evidence</div>
+          <p class="limitation__desc">
+            Model output should not be used as legal evidence, for content moderation decisions in isolation, or as the sole basis for accusations. It is a screening tool that should inform — not replace — professional forensic analysis.
+          </p>
+        </div>
+
+        <div class="limitation reveal">
+          <div class="limitation__title">Evolving Threat Landscape</div>
+          <p class="limitation__desc">
+            Image manipulation technology advances continuously. A model trained today may become less effective against tomorrow's techniques. Regular retraining and evaluation against new datasets is essential for maintaining detection capability.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       FOOTER
+       ════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <span class="footer__text">SATYA — Digital Image Forensics</span>
+        <span class="footer__text">EfficientNet-B0 · Research Tool · Not Forensic Evidence</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="js/app.js"></script>
+
+</body>
+</html>

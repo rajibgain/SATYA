@@ -1,0 +1,110 @@
+/* ==========================================================
+   SATYA DESIGN TOKENS
+   Dark forensic laboratory palette
+   ========================================================== */
+
+:root {
+  /* ── Color: Backgrounds ── */
+  --bg-primary:       #09090b;
+  --bg-secondary:     #0f0f12;
+  --bg-surface:       #141418;
+  --bg-elevated:      #1a1a1f;
+  --bg-overlay:       rgba(9, 9, 11, 0.85);
+
+  /* ── Color: Borders ── */
+  --border-subtle:    rgba(255, 255, 255, 0.05);
+  --border-default:   rgba(255, 255, 255, 0.08);
+  --border-strong:    rgba(255, 255, 255, 0.12);
+  --border-accent:    rgba(0, 207, 160, 0.25);
+
+  /* ── Color: Text ── */
+  --text-primary:     #e8e6e3;
+  --text-secondary:   #8a8a8e;
+  --text-tertiary:    #555558;
+  --text-inverse:     #09090b;
+
+  /* ── Color: Accent ── */
+  --accent:           #00cfa0;
+  --accent-dim:       rgba(0, 207, 160, 0.12);
+  --accent-glow:      rgba(0, 207, 160, 0.06);
+
+  /* ── Color: Semantic ── */
+  --color-real:       #00cfa0;
+  --color-real-dim:   rgba(0, 207, 160, 0.10);
+  --color-fake:       #e05252;
+  --color-fake-dim:   rgba(224, 82, 82, 0.10);
+  --color-warning:    #d4a843;
+
+  /* ── Typography: Families ── */
+  --font-sans:        'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:        'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+
+  /* ── Typography: Sizes ── */
+  --text-xs:          0.6875rem;     /* 11px */
+  --text-sm:          0.8125rem;     /* 13px */
+  --text-base:        0.9375rem;     /* 15px */
+  --text-lg:          1.125rem;      /* 18px */
+  --text-xl:          1.375rem;      /* 22px */
+  --text-2xl:         1.75rem;       /* 28px */
+  --text-3xl:         2.5rem;        /* 40px */
+  --text-4xl:         3.5rem;        /* 56px */
+  --text-5xl:         5rem;          /* 80px */
+  --text-6xl:         6.5rem;        /* 104px */
+
+  /* ── Typography: Weights ── */
+  --weight-normal:    400;
+  --weight-medium:    500;
+  --weight-semibold:  600;
+  --weight-bold:      700;
+
+  /* ── Typography: Tracking ── */
+  --tracking-tighter: -0.03em;
+  --tracking-tight:   -0.02em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.05em;
+  --tracking-wider:   0.1em;
+  --tracking-widest:  0.16em;
+
+  /* ── Spacing ── */
+  --space-1:    0.25rem;
+  --space-2:    0.5rem;
+  --space-3:    0.75rem;
+  --space-4:    1rem;
+  --space-5:    1.25rem;
+  --space-6:    1.5rem;
+  --space-8:    2rem;
+  --space-10:   2.5rem;
+  --space-12:   3rem;
+  --space-16:   4rem;
+  --space-20:   5rem;
+  --space-24:   6rem;
+  --space-32:   8rem;
+  --space-40:   10rem;
+
+  /* ── Layout ── */
+  --container-max:    1200px;
+  --container-narrow: 800px;
+  --nav-height:       3.5rem;
+
+  /* ── Radius ── */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-full: 9999px;
+
+  /* ── Transitions ── */
+  --ease-out:       cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:    cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast:  150ms;
+  --duration-base:  300ms;
+  --duration-slow:  500ms;
+  --duration-xslow: 800ms;
+
+  /* ── Shadows ── */
+  --shadow-sm:   0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md:   0 4px 12px rgba(0,0,0,0.4);
+  --shadow-lg:   0 8px 32px rgba(0,0,0,0.5);
+  --shadow-glow: 0 0 40px rgba(0, 207, 160, 0.08);
+}
